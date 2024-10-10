@@ -2,17 +2,17 @@
 # You need to fill in the blanks to complete the code.
 # Upon completion, you need to test run the program to give you correct output
 
-pi = 3.142
+from math import pi
 
 # kira_sfera() is a function that return the volume of sphere
-def kira_sfera(jejari):
-    isipadu_sfera = 4/3 * ........ * ........... ** ......
-    return ...................
+def volume_sphere(radius):
+    volume = 4/3 * pi * radius ** 3
+    return volume
 
 def main():
-    a = float(input("Masukkan jejari: ")) # Don't change the code!
-    isipadu_sfera = .................. # Call the function to calculate the volume of sphere
-    print(f"Isipadu sfera = {isipadu_sfera:.2f}") # Don't change the code!
+    r = float(input("Input radius: ")) 
+    Volume = volume_sphere(r) 
+    print(f"Isipadu sfera = {Volume :.2f}") 
 
 # Don't change the code below!
 if __name__ == "__main__":

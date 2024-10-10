@@ -2,18 +2,17 @@
 # You need to fill in the blanks to complete the code.
 # Upon completion, you need to test run the program to give you correct output
 
-pi = 3.142
+from math import pi
 
-# kira_kon() is a function that will return volume of cone
-def kira_kon(jejari, tinggi):
-    isipadu_kon = 1/3 * pi * .......... ** ..... * ......
-    return ...............
+def volume_cone(radius, height):
+    volume = 1/3 * pi * radius ** 2 * height
+    return volume
 
 def main():
-    a = float(input("Masukkan jejari: ")) # Don't change the code!
-    b = float(input("Masukkan tinggi: ")) # Don't change the code!
-    isipadu_kon = .................. # call the function to calculate volume of cone
-    print(f"Isipadu kon = {isipadu_kon:.2f}") # Don't change the code!
+    a = float(input("Input radius: ")) 
+    b = float(input("Input height: ")) 
+    volume = volume_cone(a, b) 
+    print(f"Volume of cone = {volume:.2f}") 
 
 # Don't change the code below!
 if __name__ == "__main__":

@@ -1,16 +1,22 @@
 # The following code contains errors.
 # You need to do 5 corrections on the code.
 # Try to do corrections on online-python.com OR IDLE PYTHON before you commit the changes.
-# testing
-def calculation(a, b):
-    subtraction = a - b
-    multiplication = a * b
-    division = a / b
-    return subtraction, multiplication, division  # return 3 values separated by comma
+
+def calculation(x, y):
+    subtraction = x - y
+    multiplication = x * y
+    division = x / y if y != 0 else None  # To handle division by zero
+    return subtraction, multiplication, division
+
+def get_numbers():
+    A = float(input("Input A: "))
+    B = float(input("Input B: "))    
+    return A, B
 
 def main():
-    [x, y, z] = calculation(30, 5)
-    print(f"subtraction = {x}, multiplication = {y}, division = {z}") 
+    [x, y] = get_numbers()
+    [S, T, U] = calculation(x, y)
+    print(f"subtraction = {S}, multiplication = {T}, division = {U}") 
 
 if __name__ == "__main__":
     main()

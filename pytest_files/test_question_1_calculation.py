@@ -2,45 +2,65 @@ import pytest
 from question_1_calculation import *
 #import isipadu_tangki_air
 
-def test_calculation():
-    # Test case 1: Normal case
-    a, b = 30, 5
-    result = calculation(a, b)
-    expected = (a - b, a * b, a / b)
-    assert result == expected, f"Expected {expected}, but got {result}"
+def test_calculation_normal_case():
+    # Normal case where both x and y are non-zero
+    result = calculation(10, 5)
+    assert result == (5, 50, 2.0)  # subtraction=5, multiplication=50, division=2.0
 
-    # Test case 2: Case with a zero (to test division)
-    a, b = 10, 2
-    result = calculation(a, b)
-    expected = (a - b, a * b, a / b)
-    assert result == expected, f"Expected {expected}, but got {result}"
+def test_calculation_division_by_zero():
+    # Case where y is zero; division should return None
+    result = calculation(10, 0)
+    assert result == (10, 0, None)  # subtraction=10, multiplication=0, division=None
 
-    # Test case 3: Case with negatives
-    a, b = -4, 6
-    result = calculation(a, b)
-    expected = (a - b, a * b, a / b)
-    assert result == expected, f"Expected {expected}, but got {result}"
+def test_calculation_negative_values():
+    # Case where both x and y are negative
+    result = calculation(-10, -5)
+    assert result == (-5, 50, 2.0)  # subtraction=-5, multiplication=50, division=2.0
 
-    # Test case 4: Case where division could return a float
-    a, b = 7, 3
-    result = calculation(a, b)
-    expected = (a - b, a * b, a / b)
-    assert result == expected, f"Expected {expected}, but got {result}"
+def test_calculation_mixed_signs():
+    # Case where x is positive and y is negative
+    result = calculation(10, -5)
+    assert result == (15, -50, -2.0)  # subtraction=15, multiplication=-50, division=-2.0
 
-    # Test case 5: Case where 'b' is zero (to handle division by zero)
-    a, b = 10, 0
-    with pytest.raises(ZeroDivisionError):
-        calculation(a, b)
+def test_calculation_floating_point_values():
+    # Case with floating point values
+    result = calculation(7.5, 2.5)
+    assert result == (5.0, 18.75, 3.0)  # subtraction=5.0, multiplication=18.75, division=3.0
 
-def test_main(capfd):
-    # Call the main function
+def test_get_numbers(monkeypatch):
+    # Simulate user inputs using monkeypatch
+    inputs = iter([5.0, 10.0])  # Simulated inputs for A and B
+
+    # Monkeypatch the 'input' function to return the next value from 'inputs' on each call
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+
+    # Call the function
+    A, B = get_numbers()
+
+    # Assert that the returned values are as expected
+    assert A == 5.0
+    assert B == 10.0
+
+def test_main(monkeypatch, capfd):
+    # Simulate user input for get_numbers()
+    inputs = iter([15.0, 3.0])  # Simulate A = 15, B = 3
+
+    # Use monkeypatch to mock input
+    monkeypatch.setattr('builtins.input', lambda _: next(inputs))
+
+    # Call the main function, which will use the simulated inputs and print the output
     main()
 
-    # Capture printed output
+    # Capture the printed output
     captured = capfd.readouterr()
 
-    # Define expected output
-    expected_output = "subtraction = 25, multiplication = 150, division = 6.0\n"
+    # Manually compute the expected values
+    expected_subtraction = 15.0 - 3.0  # 12.0
+    expected_multiplication = 15.0 * 3.0  # 45.0
+    expected_division = 15.0 / 3.0  # 5.0
+
+    # Define the expected output string
+    expected_output = f"subtraction = {expected_subtraction}, multiplication = {expected_multiplication}, division = {expected_division}\n"
 
     # Assert that the captured output matches the expected output
-    assert captured.out == expected_output, f"Expected {expected_output}, but got {captured.out}"
+    assert captured.out == expected_output
